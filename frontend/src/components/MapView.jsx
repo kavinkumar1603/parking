@@ -171,9 +171,9 @@ const MapView = () => {
                     </p>
                 </div>
 
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     {parkingLocations.map((location) => (
-                        <div key={location._id} className="bg-zinc-900 rounded-xl p-4 sm:p-6">
+                        <div key={location._id} className="bg-zinc-900 rounded-xl p-4 sm:p-6 hover:bg-zinc-800 transition-colors">
                             <h3 className="font-bold text-lg text-white mb-2">{location.name}</h3>
                             <p className="text-sm text-gray-400 mb-3">{location.address}</p>
                             <div className="flex justify-between items-center mb-3">

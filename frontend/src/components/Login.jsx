@@ -21,7 +21,13 @@ const Login = () => {
             if (response.ok) {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
-                navigate('/parking-selection');
+                
+                // Redirect admin to admin dashboard
+                if (data.user.isAdmin) {
+                    navigate('/admin');
+                } else {
+                    navigate('/parking-selection');
+                }
             } else {
                 setError(data.message);
             }

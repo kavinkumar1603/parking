@@ -17,11 +17,14 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+    // Check if user is admin
+    const isAdmin = user.checkAdmin();
+    
+    const token = jwt.sign({ id: user._id, isAdmin }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
     res.json({ 
       message: 'Login successful', 
       token,
-      user: { id: user._id, name: user.name, email: user.email } 
+      user: { id: user._id, name: user.name, email: user.email, isAdmin } 
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -45,11 +48,14 @@ router.post('/signup', async (req, res) => {
     const user = new User({ name, email, password, phone });
     await user.save();
     
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+    // Check if user is admin
+    const isAdmin = user.checkAdmin();
+    
+    const token = jwt.sign({ id: user._id, isAdmin }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
     res.status(201).json({ 
       message: 'User created successfully', 
       token,
-      user: { id: user._id, name: user.name, email: user.email } 
+      user: { id: user._id, name: user.name, email: user.email, isAdmin } 
     });
   } catch (err) {
     console.error('Signup error:', err);

@@ -109,9 +109,10 @@ const BikeBooking = () => {
     const durations = [1, 2, 4, 8, 12, 24]
 
     return (
-        <div className="min-h-screen bg-black text-white flex flex-col lg:flex-row overflow-x-hidden">
-            {/* Left Side - Parking Slots */}
-            <div className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto scrollbar-hide">
+        <div className="h-screen bg-black text-white flex flex-col lg:flex-row">
+            {/* Left Side - Parking Slots - Scrollable */}
+            <div className="flex-1 overflow-y-auto scrollbar-hide">
+                <div className="p-4 sm:p-6 md:p-8">
                 <div className="mb-6 sm:mb-8">
                     <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2">
                         AVAILABLE <span className="text-blue-500">BIKE</span> SLOTS
@@ -171,9 +172,9 @@ const BikeBooking = () => {
                 </div>
             </div>
 
-            {/* Right Side - Reservation Panel */}
-            <div className="w-full lg:w-110 bg-black flex items-center justify-center p-4 sm:p-6 md:p-8">
-                <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl sm:rounded-[2.5rem] p-4 sm:p-6 md:p-8 flex flex-col w-full max-w-md lg:max-w-none lg:h-full shadow-2xl overflow-y-auto max-h-[90vh] lg:max-h-[calc(100vh-4rem)] scrollbar-hide">
+            {/* Right Side - Reservation Panel - Fixed/Static */}
+            <div className="w-full lg:w-110 bg-black flex items-center justify-center p-4 sm:p-6 md:p-8 lg:overflow-hidden">
+                <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl sm:rounded-[2.5rem] p-4 sm:p-6 md:p-8 flex flex-col w-full max-w-md lg:max-w-none lg:h-[calc(100vh-4rem)] shadow-2xl overflow-y-auto scrollbar-hide">
                     <div className="mb-6 sm:mb-8">
                         <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight mb-1">Reservation</h2>
                         <p className="text-gray-500 font-bold uppercase text-[8px] sm:text-[9px] tracking-[0.2em]">Secure Checkout</p>
@@ -338,6 +339,7 @@ const BikeBooking = () => {
                 </div>
             </div>
         </div>
+    </div>
 )}
 
 export default BikeBooking
