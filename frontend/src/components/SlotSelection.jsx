@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 const SlotSelection = () => {
     const { locationId } = useParams();
     const location = useLocation();
@@ -76,7 +78,7 @@ const SlotSelection = () => {
 
     const fetchOccupiedSlots = async () => {
         try {
-            const response = await fetch(`http://localhost:3000/api/bookings/available?vehicleType=${vehicleType}`);
+            const response = await fetch(`${API_BASE_URL}/api/bookings/available?vehicleType=${vehicleType}`);
             const data = await response.json();
             if (response.ok) {
                 setOccupiedSlots(data.occupiedSlots || []);
@@ -102,7 +104,7 @@ const SlotSelection = () => {
         setIsBooking(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/api/bookings', {
+            const response = await fetch(`${API_BASE_URL}/api/bookings`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',

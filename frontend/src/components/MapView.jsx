@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 // import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { useNavigate, useParams } from 'react-router-dom';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 const MapView = () => {
     const { vehicleType } = useParams();
     const [userLocation, setUserLocation] = useState(null);
@@ -50,7 +52,7 @@ const MapView = () => {
     const fetchNearbyLocations = async (location) => {
         try {
             const response = await fetch(
-                `http://localhost:3000/api/locations/nearby?lat=${location.lat}&lng=${location.lng}&radius=10`
+                `${API_BASE_URL}/api/locations/nearby?lat=${location.lat}&lng=${location.lng}&radius=10`
             );
             const data = await response.json();
             if (response.ok) {

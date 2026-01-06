@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 const CarBooking = () => {
     const [selectedSlot, setSelectedSlot] = useState(null)
@@ -14,7 +15,7 @@ const CarBooking = () => {
     useEffect(() => {
         const fetchOccupiedSlots = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/bookings/available?vehicleType=car');
+                const response = await fetch(`${API_BASE_URL}/api/bookings/available?vehicleType=car`);
                 const data = await response.json();
                 if (response.ok) {
                     console.log('Occupied car slots:', data.occupiedSlots);
@@ -45,7 +46,7 @@ const CarBooking = () => {
         setIsLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/api/bookings', {
+            const response = await fetch(`${API_BASE_URL}/api/bookings`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ const CarBooking = () => {
             if (response.ok) {
                 alert(`Reservation confirmed! Total: ${data.price} for ${data.details}`);
                 // Refresh occupied slots
-                const slotsResponse = await fetch('http://localhost:3000/api/bookings/available?vehicleType=car');
+                const slotsResponse = await fetch(`${API_BASE_URL}/api/bookings/available?vehicleType=car`);
                 const slotsData = await slotsResponse.json();
                 if (slotsResponse.ok) {
                     setOccupiedSlots(slotsData.occupiedSlots);

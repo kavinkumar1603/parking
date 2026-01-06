@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 const AdminDashboard = () => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('dashboard');
@@ -32,28 +34,28 @@ const AdminDashboard = () => {
 
         try {
             if (activeTab === 'dashboard') {
-                const res = await fetch('http://localhost:3000/api/admin/stats', { headers });
+                const res = await fetch(`${API_BASE_URL}/api/admin/stats`, { headers });
                 if (!res.ok) {
                     throw new Error('Failed to fetch stats');
                 }
                 const data = await res.json();
                 setStats(data);
             } else if (activeTab === 'bookings') {
-                const res = await fetch(`http://localhost:3000/api/admin/bookings?page=${currentPage}&status=${filterStatus}&search=${searchTerm}`, { headers });
+                const res = await fetch(`${API_BASE_URL}/api/admin/bookings?page=${currentPage}&status=${filterStatus}&search=${searchTerm}`, { headers });
                 if (!res.ok) {
                     throw new Error('Failed to fetch bookings');
                 }
                 const data = await res.json();
                 setBookings(data.bookings || []);
             } else if (activeTab === 'users') {
-                const res = await fetch(`http://localhost:3000/api/admin/users?page=${currentPage}&search=${searchTerm}`, { headers });
+                const res = await fetch(`${API_BASE_URL}/api/admin/users?page=${currentPage}&search=${searchTerm}`, { headers });
                 if (!res.ok) {
                     throw new Error('Failed to fetch users');
                 }
                 const data = await res.json();
                 setUsers(data.users || []);
             } else if (activeTab === 'locations') {
-                const res = await fetch('http://localhost:3000/api/admin/locations', { headers });
+                const res = await fetch(`${API_BASE_URL}/api/admin/locations`, { headers });
                 if (!res.ok) {
                     throw new Error('Failed to fetch locations');
                 }
@@ -71,7 +73,7 @@ const AdminDashboard = () => {
     const handleStatusUpdate = async (bookingId, newStatus) => {
         const token = localStorage.getItem('token');
         try {
-            const res = await fetch(`http://localhost:3000/api/admin/bookings/${bookingId}/status`, {
+            const res = await fetch(`${API_BASE_URL}/api/admin/bookings/${bookingId}/status`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -93,7 +95,7 @@ const AdminDashboard = () => {
         
         const token = localStorage.getItem('token');
         try {
-            const res = await fetch(`http://localhost:3000/api/admin/bookings/${bookingId}`, {
+            const res = await fetch(`${API_BASE_URL}/api/admin/bookings/${bookingId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

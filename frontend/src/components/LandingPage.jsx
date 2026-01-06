@@ -4,9 +4,13 @@ import { useNavigate } from 'react-router-dom'
 const LandingPage = () => {
 
     const navigate = useNavigate();
-    const handlesubmit = () => {
-        navigate('/login');
-    }
+        const handleUserClick = () => {
+            navigate('/login');
+        }
+
+        const handleAdminClick = () => {
+            navigate('/admin');
+        }
 
     return (
         <div
@@ -21,9 +25,20 @@ const LandingPage = () => {
                     </h1>
                     <p className="mb-6 text-sm sm:text-base md:text-xl lg:text-2xl leading-relaxed">
                         smart parking leads you straight to an available spot <br className="hidden sm:block"/> saving time, fuel, and frustration.</p>
-                    <button className="rounded-full bg-blue-600 px-6 py-3 sm:px-8 sm:py-3 text-base sm:text-lg font-semibold text-white hover:bg-blue-700 active:scale-95 transition-transform touch-manipulation" onClick={handlesubmit}>
-                        Get Started
-                    </button>
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-end sm:justify-end">
+                            <button
+                                className="rounded-full bg-blue-600 px-6 py-3 sm:px-8 sm:py-3 text-base sm:text-lg font-semibold text-white hover:bg-blue-700 active:scale-95 transition-transform touch-manipulation"
+                                onClick={handleUserClick}
+                            >
+                                Continue as User
+                            </button>
+                            <button
+                                className="rounded-full bg-gray-800 px-6 py-3 sm:px-8 sm:py-3 text-base sm:text-lg font-semibold text-white hover:bg-gray-700 active:scale-95 transition-transform touch-manipulation border border-white/20"
+                                onClick={handleAdminClick}
+                            >
+                                Continue as Admin
+                            </button>
+                        </div>
                 </div>
             </div>
         </div>

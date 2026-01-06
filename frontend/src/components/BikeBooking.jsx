@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 
 const BikeBooking = () => {
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
     const [selectedSlot, setSelectedSlot] = useState(null)
     const [duration, setDuration] = useState(1)
     const [paymentMethod, setPaymentMethod] = useState('card')
@@ -14,7 +15,7 @@ const BikeBooking = () => {
     useEffect(() => {
         const fetchOccupiedSlots = async () => {
             try {
-                const response = await fetch('http://localhost:3000/api/bookings/available?vehicleType=bike');
+                const response = await fetch(`${API_BASE_URL}/api/bookings/available?vehicleType=bike`);
                 const data = await response.json();
                 if (response.ok) {
                     console.log('Occupied bike slots:', data.occupiedSlots);
@@ -45,7 +46,7 @@ const BikeBooking = () => {
         setIsLoading(true);
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch('http://localhost:3000/api/bookings', {
+            const response = await fetch(`${API_BASE_URL}/api/bookings`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ const BikeBooking = () => {
             if (response.ok) {
                 alert(`Reservation confirmed! Total: ${data.price} for ${data.details}`);
                 // Refresh occupied slots
-                const slotsResponse = await fetch('http://localhost:3000/api/bookings/available?vehicleType=bike');
+                const slotsResponse = await fetch(`${API_BASE_URL}/api/bookings/available?vehicleType=bike`);
                 const slotsData = await slotsResponse.json();
                 if (slotsResponse.ok) {
                     setOccupiedSlots(slotsData.occupiedSlots);

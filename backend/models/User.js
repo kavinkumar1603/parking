@@ -22,7 +22,11 @@ UserSchema.methods.comparePassword = async function(password) {
 
 // Check if user is admin
 UserSchema.methods.checkAdmin = function() {
-  return this.email === 'kavin88701@gmail.com' || this.isAdmin === true;
+  return (
+    this.email === 'kavin88701@gmail.com' ||
+    this.email === 'mathupriya2006@gmail.com' ||
+    this.isAdmin === true
+  );
 };
 
 module.exports = mongoose.model('User', UserSchema);

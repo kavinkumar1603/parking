@@ -2,6 +2,8 @@ import login from '../assets/login.jpg'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+
 const SignUp = () => {
 
     const navigate = useNavigate();
@@ -16,8 +18,7 @@ const SignUp = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            
-            const response = await fetch('http://localhost:3000/api/signup', {
+            const response = await fetch(`${API_BASE_URL}/api/signup`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData)
