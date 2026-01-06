@@ -35,48 +35,48 @@ const Login = () => {
     }
 
     return (
-        <div className="flex h-screen">
+        <div className="flex flex-col md:flex-row min-h-screen">
             {/* Left Half - Image */}
             <div 
                 style={{ backgroundImage: `url(${login})` }}
-                className="w-1/2 bg-cover bg-center relative"
+                className="w-full md:w-1/2 min-h-[40vh] md:min-h-screen bg-cover bg-center relative"
             >
                 <div className="absolute inset-0 bg-black/50" />
-                <div className="relative z-10 flex h-full items-center justify-center px-12">
-                    <div className="text-white mt-90">
-                        <h1 className="text-6xl font-bold mb-6">PARK SMART</h1>
-                        <p className="text-xl">Your hassle-free parking solution. Sign in to manage your spots.</p>
+                <div className="relative z-10 flex h-full items-center justify-center px-6 sm:px-12 py-8">
+                    <div className="text-white text-center md:text-left">
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6">PARK SMART</h1>
+                        <p className="text-base sm:text-lg md:text-xl">Your hassle-free parking solution. Sign in to manage your spots.</p>
                     </div>
                 </div>
             </div>
 
             {/* Right Half - Form */}
-            <div className="w-1/2 flex items-center justify-center bg-gray-200 px-12">
+            <div className="w-full md:w-1/2 flex items-center justify-center bg-gray-200 px-6 sm:px-8 md:px-12 py-8">
                 <div className="w-full max-w-md">
-                    <h2 className="text-4xl font-bold mb-3">WELCOME BACK</h2>
-                    <p className="text-gray-400 mb-12">Please enter your details to sign in.</p>
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 sm:mb-3">WELCOME BACK</h2>
+                    <p className="text-gray-400 mb-6 sm:mb-8 md:mb-12 text-sm sm:text-base">Please enter your details to sign in.</p>
 
                     <form onSubmit={handleSubmit}>
                         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-                        <div className="mb-8">
-                            <label className="block text-xs font-medium text-gray-400 mb-3">EMAIL ADDRESS</label>
+                        <div className="mb-6 sm:mb-8">
+                            <label className="block text-xs font-medium text-gray-400 mb-2 sm:mb-3">EMAIL ADDRESS</label>
                             <input 
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="w-full py-2 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
+                                className="w-full py-3 sm:py-2 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent text-base"
                             />
                         </div>
 
-                        <div className="mb-8">
-                            <label className="block text-xs font-medium text-gray-400 mb-3">PASSWORD</label>
+                        <div className="mb-6 sm:mb-8">
+                            <label className="block text-xs font-medium text-gray-400 mb-2 sm:mb-3">PASSWORD</label>
                             <input 
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                className="w-full py-2 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent"
+                                className="w-full py-3 sm:py-2 border-b border-gray-300 focus:outline-none focus:border-black bg-transparent text-base"
                             />
                         </div>
 
@@ -90,12 +90,12 @@ const Login = () => {
 
                         <button 
                             type="submit"
-                            className="w-full bg-blue-600 text-white py-4 font-bold text-sm hover:bg-blue-700 mb-8"
+                            className="w-full bg-blue-600 text-white py-3 sm:py-4 font-bold text-sm hover:bg-blue-700 active:bg-blue-800 mb-6 sm:mb-8 touch-manipulation transition-colors"
                         >
                             LOG IN
                         </button>
 
-                        <p className="text-center text-xs text-gray-500">
+                        <p className="text-center text-xs sm:text-xs text-gray-500">
                             DON'T HAVE AN ACCOUNT? <a href="#" className="font-bold text-black hover:underline" onClick={handleClick} >SIGN UP</a>
                         </p>
                     </form>

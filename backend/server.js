@@ -16,6 +16,7 @@ connectDB();
 const authRoutes = require('./routes/auth');
 app.use('/api', authRoutes);
 app.use('/api/bookings', require('./routes/bookings'));
+app.use('/api/locations', require('./routes/locations'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

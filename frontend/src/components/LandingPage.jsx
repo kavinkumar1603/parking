@@ -11,17 +11,17 @@ const LandingPage = () => {
     return (
         <div
             style={{ backgroundImage: `url(${landing})` }}
-            className="relative h-screen bg-cover bg-center"
+            className="relative min-h-screen h-screen bg-cover bg-center"
         >
             <div className="absolute inset-0 bg-black/80" />
-            <div className="relative z-10 flex h-full items-center justify-end px-8">
-                <div className="text-right text-white">
-                    <h1 className="mb-4 text-8xl font-extrabold leading-tight">
+            <div className="relative z-10 flex h-full items-center justify-end px-4 sm:px-8 md:px-12">
+                <div className="text-right text-white max-w-full">
+                    <h1 className="mb-4 text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-extrabold leading-tight">
                         Smart Parking <br/> Made Simple
                     </h1>
-                    <p className="mb-6 text-2xl">
-                        smart parking leads you straight to an available spot <br/> saving time, fuel, and frustration.</p>
-                    <button className="rounded-full bg-blue-600 px-8 py-3 text-lg font-semibold text-white hover:bg-blue-700" onClick={handlesubmit}>
+                    <p className="mb-6 text-sm sm:text-base md:text-xl lg:text-2xl leading-relaxed">
+                        smart parking leads you straight to an available spot <br className="hidden sm:block"/> saving time, fuel, and frustration.</p>
+                    <button className="rounded-full bg-blue-600 px-6 py-3 sm:px-8 sm:py-3 text-base sm:text-lg font-semibold text-white hover:bg-blue-700 active:scale-95 transition-transform touch-manipulation" onClick={handlesubmit}>
                         Get Started
                     </button>
                 </div>
