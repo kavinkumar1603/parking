@@ -10,6 +10,7 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [showRoleChoice, setShowRoleChoice] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,9 +25,10 @@ const Login = () => {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
                 
-                // Redirect admin to admin dashboard
+                // If admin, show choice between User and Admin views
                 if (data.user.isAdmin) {
-                    navigate('/admin');
+                    setShowRoleChoice(true);
+                    setError('');
                 } else {
                     navigate('/parking-selection');
                 }
@@ -35,6 +37,14 @@ const Login = () => {
             }
         } catch (err) {
             setError('Server error');
+        }
+    }
+
+    const handleRoleSelect = (role) => {
+        if (role === 'admin') {
+            navigate('/admin');
+        } else {
+            navigate('/parking-selection');
         }
     }
 
@@ -107,6 +117,28 @@ const Login = () => {
                             DON'T HAVE AN ACCOUNT? <a href="#" className="font-bold text-black hover:underline" onClick={handleClick} >SIGN UP</a>
                         </p>
                     </form>
+
+                    {showRoleChoice && (
+                        <div className="mt-8 p-4 bg-white rounded shadow-sm border border-gray-200">
+                            <h3 className="text-lg font-semibold mb-3">Continue as</h3>
+                            <div className="flex flex-col sm:flex-row gap-3">
+                                <button
+                                    type="button"
+                                    className="flex-1 bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition-colors"
+                                    onClick={() => handleRoleSelect('user')}
+                                >
+                                    User
+                                </button>
+                                <button
+                                    type="button"
+                                    className="flex-1 bg-gray-800 text-white py-2 rounded-md font-semibold hover:bg-gray-700 transition-colors"
+                                    onClick={() => handleRoleSelect('admin')}
+                                >
+                                    Admin
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

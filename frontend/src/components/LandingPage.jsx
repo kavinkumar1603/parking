@@ -4,12 +4,8 @@ import { useNavigate } from 'react-router-dom'
 const LandingPage = () => {
 
     const navigate = useNavigate();
-        const handleUserClick = () => {
+        const handleGetStartedClick = () => {
             navigate('/login');
-        }
-
-        const handleAdminClick = () => {
-            navigate('/admin');
         }
 
     return (
@@ -28,15 +24,9 @@ const LandingPage = () => {
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-end sm:justify-end">
                             <button
                                 className="rounded-full bg-blue-600 px-6 py-3 sm:px-8 sm:py-3 text-base sm:text-lg font-semibold text-white hover:bg-blue-700 active:scale-95 transition-transform touch-manipulation"
-                                onClick={handleUserClick}
+                                onClick={handleGetStartedClick}
                             >
-                                Continue as User
-                            </button>
-                            <button
-                                className="rounded-full bg-gray-800 px-6 py-3 sm:px-8 sm:py-3 text-base sm:text-lg font-semibold text-white hover:bg-gray-700 active:scale-95 transition-transform touch-manipulation border border-white/20"
-                                onClick={handleAdminClick}
-                            >
-                                Continue as Admin
+                                Get Started
                             </button>
                         </div>
                 </div>
