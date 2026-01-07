@@ -12,40 +12,71 @@ const BookingTicket = ({ ticketData, onClose }) => {
             style.id = styleId;
             style.textContent = `
                 @media print {
+                    @page {
+                        margin: 0.5cm;
+                    }
+                    
                     body * {
                         visibility: hidden;
                     }
-                    #parking-ticket, #parking-ticket * {
-                        visibility: visible;
+                    
+                    #parking-ticket-wrapper,
+                    #parking-ticket-wrapper *,
+                    #parking-ticket,
+                    #parking-ticket * {
+                        visibility: visible !important;
                     }
+                    
+                    #parking-ticket-wrapper {
+                        position: absolute !important;
+                        left: 0 !important;
+                        top: 0 !important;
+                        width: 100% !important;
+                        height: auto !important;
+                        background: white !important;
+                        padding: 20px !important;
+                        display: block !important;
+                    }
+                    
                     #parking-ticket {
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        max-width: 100%;
-                        margin: 0;
-                        padding: 20px;
+                        position: relative !important;
+                        width: 100% !important;
+                        max-width: 100% !important;
+                        margin: 0 !important;
+                        padding: 30px !important;
                         background: white !important;
                         color: black !important;
+                        border: 2px solid #ddd !important;
+                        border-radius: 10px !important;
+                        box-shadow: none !important;
                     }
-                    #parking-ticket .bg-gradient-to-br {
+                    
+                    #parking-ticket .bg-gradient-to-br,
+                    #parking-ticket .bg-linear-to-br {
                         background: white !important;
                     }
+                    
                     #parking-ticket .text-white {
                         color: black !important;
                     }
+                    
                     #parking-ticket .text-gray-400,
                     #parking-ticket .text-gray-500 {
                         color: #666 !important;
                     }
+                    
                     #parking-ticket .text-blue-400,
                     #parking-ticket .text-blue-500 {
                         color: #2563eb !important;
                     }
+                    
                     #parking-ticket .border-white\\/10,
                     #parking-ticket .border-white\\/20 {
                         border-color: #ddd !important;
+                    }
+                    
+                    .print\\:hidden {
+                        display: none !important;
                     }
                 }
             `;
@@ -56,8 +87,8 @@ const BookingTicket = ({ ticketData, onClose }) => {
     if (!ticketData) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
-            <div id="parking-ticket" className="relative w-full max-w-md bg-gradient-to-br from-zinc-900 to-black border border-white/10 rounded-3xl shadow-2xl p-6 sm:p-8 text-white">
+        <div id="parking-ticket-wrapper" className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 px-4">
+            <div id="parking-ticket" className="relative w-full max-w-md bg-linear-to-br from-zinc-900 to-black border border-white/10 rounded-3xl shadow-2xl p-6 sm:p-8 text-white">
                 <button
                     onClick={onClose}
                     className="absolute top-3 right-4 text-gray-400 hover:text-white text-sm font-bold print:hidden"

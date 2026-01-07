@@ -38,7 +38,7 @@ async function autoReleaseExpiredBookings() {
 
 // ========== CONFIRM BOOKING ==========
 // Function to confirm a new booking
-async function confirmBooking(userId, vehicleType, vehicleNumber, parkingSlot, startTime, duration) {
+async function confirmBooking(userId, locationId, vehicleType, vehicleNumber, parkingSlot, startTime, duration) {
   // Calculate endTime based on duration
   const start = new Date(startTime);
   const end = new Date(start.getTime() + duration * 60 * 60 * 1000); // Add hours in milliseconds
@@ -49,6 +49,7 @@ async function confirmBooking(userId, vehicleType, vehicleNumber, parkingSlot, s
   // Create booking with 'reserved' status
   const booking = new Booking({
     userId,
+    locationId,
     vehicleType,
     vehicleNumber,
     parkingSlot,
@@ -81,19 +82,20 @@ router.get('/', auth, async (req, res) => {
 // POST - Create new booking (protected)
 router.post('/', auth, async (req, res) => {
   try {
-    const { vehicleType, vehicleNumber, parkingSlot, startTime, duration } = req.body;
+    const { locationId, vehicleType, vehicleNumber, parkingSlot, startTime, duration } = req.body;
     
     // Validate required fields
-    if (!vehicleType || !vehicleNumber || !parkingSlot || !startTime || !duration) {
+    if (!locationId || !vehicleType || !vehicleNumber || !parkingSlot || !startTime || !duration) {
       return res.status(400).json({ message: 'All fields are required' });
     }
     
     // Auto-release expired bookings first
     await autoReleaseExpiredBookings();
     
-    // Check if slot is available (no active 'reserved' or 'active' bookings for this slot)
+    // Check if slot is available (no active 'reserved' or 'active' bookings for this slot at this location)
     const now = new Date();
     const existingBooking = await Booking.findOne({
+      locationId,
       parkingSlot,
       status: { $in: ['reserved', 'active'] }, // Handle both statuses
       endTime: { $gt: now } // Still active
@@ -106,6 +108,7 @@ router.post('/', auth, async (req, res) => {
     // Confirm booking
     const booking = await confirmBooking(
       req.user.id,
+      locationId,
       vehicleType,
       vehicleNumber,
       parkingSlot,
@@ -132,7 +135,7 @@ router.get('/available', async (req, res) => {
     await autoReleaseExpiredBookings();
     
     const now = new Date();
-    const { vehicleType } = req.query; // Optional filter by vehicle type
+    const { vehicleType, locationId } = req.query; // Filter by vehicle type and location
     
     // Get all currently reserved/active slots (handle both statuses for backward compatibility)
     const query = {
@@ -144,10 +147,15 @@ router.get('/available', async (req, res) => {
       query.vehicleType = vehicleType;
     }
     
+    // IMPORTANT: Filter by locationId to only show occupied slots for this specific location
+    if (locationId) {
+      query.locationId = locationId;
+    }
+    
     const reservedBookings = await Booking.find(query);
     const occupiedSlots = reservedBookings.map(b => b.parkingSlot);
     
-    console.log(`Available slots requested for ${vehicleType || 'all'}: ${occupiedSlots.length} occupied`, occupiedSlots);
+    console.log(`Available slots requested for location ${locationId || 'all'}, ${vehicleType || 'all'}: ${occupiedSlots.length} occupied`, occupiedSlots);
     
     res.json({
       message: 'Slot availability retrieved',

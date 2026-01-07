@@ -22,6 +22,7 @@ router.get('/bookings', adminAuth, async (req, res) => {
 
     const bookings = await Booking.find(query)
       .populate('userId', 'name email phone')
+      .populate('locationId', 'name address')
       .sort({ createdAt: -1 })
       .limit(limit * 1)
       .skip((page - 1) * limit);
@@ -62,6 +63,7 @@ router.get('/stats', adminAuth, async (req, res) => {
     // Recent bookings
     const recentBookings = await Booking.find()
       .populate('userId', 'name email')
+      .populate('locationId', 'name')
       .sort({ createdAt: -1 })
       .limit(5);
 
@@ -89,7 +91,8 @@ router.put('/bookings/:id/status', adminAuth, async (req, res) => {
       req.params.id,
       { status },
       { new: true }
-    ).populate('userId', 'name email phone');
+    ).populate('userId', 'name email phone')
+     .populate('locationId', 'name address');
 
     if (!booking) {
       return res.status(404).json({ message: 'Booking not found' });

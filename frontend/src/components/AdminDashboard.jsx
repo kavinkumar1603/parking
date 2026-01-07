@@ -24,6 +24,17 @@ const AdminDashboard = () => {
         fetchData();
     }, [navigate, activeTab]);
 
+    // Add debounced search effect
+    useEffect(() => {
+        if (activeTab === 'bookings' || activeTab === 'users') {
+            const timeoutId = setTimeout(() => {
+                fetchData();
+            }, 500); // 500ms debounce
+
+            return () => clearTimeout(timeoutId);
+        }
+    }, [searchTerm, filterStatus, currentPage]);
+
     const fetchData = async () => {
         setLoading(true);
         const token = localStorage.getItem('token');
@@ -143,6 +154,8 @@ const AdminDashboard = () => {
                                 onClick={() => {
                                     setActiveTab(tab);
                                     setCurrentPage(1);
+                                    setSearchTerm('');
+                                    setFilterStatus('');
                                 }}
                                 className={`px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-wider transition whitespace-nowrap touch-manipulation ${
                                     activeTab === tab
@@ -256,12 +269,6 @@ const AdminDashboard = () => {
                                         <option value="reserved">Active</option>
                                         <option value="open">Completed</option>
                                     </select>
-                                    <button
-                                        onClick={fetchData}
-                                        className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg font-bold transition touch-manipulation"
-                                    >
-                                        Search
-                                    </button>
                                 </div>
 
                                 {/* Bookings List */}
@@ -340,10 +347,9 @@ const AdminDashboard = () => {
                             <div className="space-y-4">
                                 <input
                                     type="text"
-                                    placeholder="Search users..."
+                                    placeholder="Search users by name, email, or phone..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    onKeyPress={(e) => e.key === 'Enter' && fetchData()}
                                     className="w-full bg-zinc-900 border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-blue-500"
                                 />
 

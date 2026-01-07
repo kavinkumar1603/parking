@@ -9,6 +9,7 @@ import BikeBooking from './components/BikeBooking'
 import MapView from './components/MapView'
 import SlotSelection from './components/SlotSelection'
 import AdminDashboard from './components/AdminDashboard'
+import BookingTicket from './components/BookingTicket'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/car-booking" element={<CarBooking/>} />
           <Route path="/bike-booking" element={<BikeBooking/>} />
           <Route path="/admin" element={<AdminDashboard/>} />
+          <Route path="/bookingticket" element={<BookingTicket/>} />
           <Route path="*" element={<h1 className='text-center mt-20 text-3xl'>404 Not Found</h1>} />
         </Routes>
       </div>

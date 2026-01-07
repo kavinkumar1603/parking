@@ -269,11 +269,11 @@ const SlotSelection = () => {
         fetchOccupiedSlots();
         const interval = setInterval(fetchOccupiedSlots, 30000);
         return () => clearInterval(interval);
-    }, [vehicleType]);
+    }, [vehicleType, locationId]);
 
     const fetchOccupiedSlots = async () => {
         try {
-            const response = await fetch(`${API_BASE_URL}/api/bookings/available?vehicleType=${vehicleType}`);
+            const response = await fetch(`${API_BASE_URL}/api/bookings/available?vehicleType=${vehicleType}&locationId=${locationId}`);
             const data = await response.json();
             if (response.ok) {
                 setOccupiedSlots(data.occupiedSlots || []);
@@ -306,6 +306,7 @@ const SlotSelection = () => {
                     'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
+                    locationId,
                     vehicleType,
                     vehicleNumber,
                     parkingSlot: selectedSlot,
